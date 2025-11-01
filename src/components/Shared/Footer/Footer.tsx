@@ -1,49 +1,74 @@
+
+"use client"
 import {
   FacebookIcon,
-  Github,
   Linkedin,
   Mail,
   MapPin,
   Phone,
 } from "lucide-react";
 import Link from "next/link";
-
-const footerLinks = {
-  product: [
-    { name: "Home", href: "/" },
-    { name: "Gallery", href: "/gallery" },
-    { name: "Team", href: "/team" },
-    { name: "Contact", href: "#contact-us" },
-  ],
-  contactItems: [
-    {
-      type: "link",
-      href: "tel:+8801700000000",
-      icon: Phone,
-      label: "+880 170 000 0000",
-    },
-    {
-      type: "link",
-      href: "mailto:info@zerophotography.com",
-      icon: Mail,
-      label: "info@zerophotography.com",
-    },
-    {
-      type: "text",
-      icon: MapPin,
-      label: "Mirpur, Dhaka, Bangladesh",
-    },
-  ],
-};
+import { usePathname, useRouter } from "next/navigation";
 
 const socialLinks = [
   { name: "Facebook", href: "#", icon: FacebookIcon },
-  { name: "Github", href: "#", icon: Github },
   { name: "LinkedIn", href: "#", icon: Linkedin },
   { name: "Email", href: "#", icon: Mail },
 ];
 
 export const Footer = () => {
+  const pathname = usePathname();
+  const router = useRouter();
+
+  const scrollToSection = (sectionId: string) => {
+    if (pathname === "/") {
+      // If we're on home page, scroll to section
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    } else {
+      // If we're on another page, navigate to home with hash
+      router.push(`/#${sectionId}`);
+    }
+  };
+
+  const handleContactClick = () => {
+    scrollToSection("contact-section");
+  };
+
+  const footerLinks = {
+    product: [
+      { name: "Home", href: "/" },
+      { name: "Gallery", href: "/gallery" },
+      { name: "Team", href: "/team" },
+      { 
+        name: "Contact", 
+        href: "/#contact-section",
+        onClick: handleContactClick 
+      },
+    ],
+    contactItems: [
+      {
+        type: "link",
+        href: "tel:+8801700000000",
+        icon: Phone,
+        label: "+880 170 000 0000",
+      },
+      {
+        type: "link",
+        href: "mailto:info@zerophotography.com",
+        icon: Mail,
+        label: "info@zerophotography.com",
+      },
+      {
+        type: "text",
+        icon: MapPin,
+        label: "Mirpur, Dhaka, Bangladesh",
+      },
+    ],
+  };
+
   return (
     // Footer Component
     <footer className="border-t border-[#1e1e1e] bg-badgeColor w-full mx-auto">
@@ -82,14 +107,23 @@ export const Footer = () => {
               Quick Links
             </h4>
             <ul className="space-y-3">
-              {footerLinks.product.map((productLink) => (
-                <li key={productLink.name}>
-                  <Link
-                    href={productLink.href}
-                    className="text-sm text-[#f5f5f5] hover:text-[#E6B800] transition-colors"
-                  >
-                    {productLink.name}
-                  </Link>
+              {footerLinks.product.map((link) => (
+                <li key={link.name}>
+                  {link.onClick ? (
+                    <button
+                      onClick={link.onClick}
+                      className="text-sm text-[#f5f5f5] hover:text-[#E6B800] transition-colors text-left"
+                    >
+                      {link.name}
+                    </button>
+                  ) : (
+                    <Link
+                      href={link.href}
+                      className="text-sm text-[#f5f5f5] hover:text-[#E6B800] transition-colors"
+                    >
+                      {link.name}
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>

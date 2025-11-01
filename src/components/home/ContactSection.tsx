@@ -49,7 +49,7 @@ const ContactSection = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-primary">
+    <div className="min-h-screen bg-primary" id="contact-section">
       {/* Hero Section */}
       <section className="pt-32 pb-16 bg-gradient-dark">
         <div className="max-w-7xl mx-auto px-4">

@@ -27,11 +27,28 @@ const Navbar = () => {
     setIsMobileMenuOpen(false);
   }, [pathname]);
 
+  const scrollToSection = (sectionId: string) => {
+    if (pathname === "/") {
+      // If we're on home page, scroll to section
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    } else {
+      // If we're on another page, navigate to home with hash
+      window.location.href = `/#${sectionId}`;
+    }
+  };
+
   const navLinks = [
     { name: "Home", path: "/" },
     { name: "Gallery", path: "/gallery" },
     { name: "Team", path: "/team" },
-    { name: "Contact", path: "#contact-us" },
+    {
+      name: "Contact",
+      path: "/#contact-section",
+      onclick: () => scrollToSection("contact-section"),
+    },
   ];
 
   return (
@@ -54,17 +71,29 @@ const Navbar = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            {navLinks.map((link) => (
-              <Link
-                key={link.path}
-                href={link.path}
-                className={`text-lg font-serif font-medium transition-colors hover:text-third ${
-                  pathname === link.path ? "text-third" : "text-secondary"
-                }`}
-              >
-                {link.name}
-              </Link>
-            ))}
+            {navLinks.map((link) =>
+              link.onclick ? (
+                <button
+                  key={link.name}
+                  onClick={link.onclick}
+                  className={`text-lg font-serif font-medium transition-colors hover:text-third ${
+                    pathname === link.path ? "text-third" : "text-secondary"
+                  }`}
+                >
+                  {link.name}
+                </button>
+              ) : (
+                <Link
+                  key={link.path}
+                  href={link.path}
+                  className={`text-lg font-serif font-medium transition-colors hover:text-third ${
+                    pathname === link.path ? "text-third" : "text-secondary"
+                  }`}
+                >
+                  {link.name}
+                </Link>
+              )
+            )}
             <Button
               variant="default"
               size="default"
