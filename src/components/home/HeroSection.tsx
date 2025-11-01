@@ -32,14 +32,12 @@ const HeroSection = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          <h1 className="font-display text-5xl md:text-7xl font-bold mb-6">
+          <h1 className="font-serif text-secondary text-5xl md:text-8xl font-bold mb-10">
             Capturing Stories,
             <br />
-            <span className="bg-gradient-gold bg-clip-text text-transparent">
-              Not Just Photos
-            </span>
+            <span className="text-third">Not Just Photos</span>
           </h1>
-          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8">
+          <p className="text-lg font-mono md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 text-quoteColor">
             Professional photography and cinematography services in Dhaka.
             Creating timeless memories since 2019.
           </p>
@@ -47,7 +45,7 @@ const HeroSection = () => {
             <Link href="/gallery">
               <Button
                 size="lg"
-                className="bg-gradient-gold hover:shadow-glow transition-all group"
+                className="bg-third text-secondary hover:bg-third hover:scale-105 transition-transform group cursor-pointer font-serif"
               >
                 View Portfolio
                 <ArrowRight
@@ -60,7 +58,7 @@ const HeroSection = () => {
               <Button
                 size="lg"
                 variant="outline"
-                className="border-primary text-primary hover:bg-primary hover:text-primary-foreground"
+                className="border-third text-third hover:bg-third hover:text-secondary font-serif cursor-pointer"
               >
                 Contact Us
               </Button>

@@ -39,11 +39,11 @@ const Navbar = () => {
       animate={{ y: 0 }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? "bg-background/95 backdrop-blur-md shadow-elegant"
+          ? "bg-[#121212] backdrop-blur-md shadow-elegant"
           : "bg-transparent"
       }`}
     >
-      <div className="container mx-auto px-4 py-4">
+      <div className="max-w-7xl mx-auto py-4 px-4">
         <div className="flex items-center justify-between">
           <Link href="/" className="flex items-center space-x-2">
             <span className="font-serif text-third text-2xl font-bold">
@@ -112,7 +112,7 @@ const Navbar = () => {
                     className="flex items-center space-x-2"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
-                    <span className="font-serif text-2xl font-bold bg-gradient-gold bg-clip-text text-[#ffc007]">
+                    <span className="font-serif text-2xl font-bold bg-gradient-gold bg-clip-text text-third">
                       Zero Photography
                     </span>
                   </Link>
@@ -139,9 +139,9 @@ const Navbar = () => {
                           onClick={() => setIsMobileMenuOpen(false)}
                           className={`block text-lg 
                            font-serif
-                           text-third font-medium transition-all duration-200 hover:text-primary hover:translate-x-2 ${
+                           text-secondary font-medium transition-all duration-200 hover:text-third hover:translate-x-2 ${
                              pathname === link.path
-                               ? "text-primary border-l-4 border-primary pl-4"
+                               ? "text-third border-l-4 border-third pl-4"
                                : "text-foreground pl-6"
                            }`}
                         >
