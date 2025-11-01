@@ -13,7 +13,7 @@ const footerLinks = {
     { name: "Home", href: "/" },
     { name: "Gallery", href: "/gallery" },
     { name: "Team", href: "/team" },
-    { name: "Contact", href: "#contact" },
+    { name: "Contact", href: "#contact-us" },
   ],
   contactItems: [
     {
