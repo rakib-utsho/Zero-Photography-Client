@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
@@ -27,16 +28,36 @@ const Navbar = () => {
     setIsMobileMenuOpen(false);
   }, [pathname]);
 
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMobileMenuOpen]);
+
   const scrollToSection = (sectionId: string) => {
     if (pathname === "/") {
-      // If we're on home page, scroll to section
       const element = document.getElementById(sectionId);
       if (element) {
         element.scrollIntoView({ behavior: "smooth" });
       }
     } else {
-      // If we're on another page, navigate to home with hash
-      window.location.href = `/#${sectionId}`;
+      router.push(`/#${sectionId}`);
+    }
+    setIsMobileMenuOpen(false);
+  };
+
+  const handleLinkClick = (link: any) => {
+    if (link.onclick) {
+      link.onclick();
+    } else {
+      setIsMobileMenuOpen(false);
     }
   };
 
@@ -52,69 +73,71 @@ const Navbar = () => {
   ];
 
   return (
-    <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? "bg-[#121212] backdrop-blur-md shadow-elegant"
-          : "bg-transparent"
-      }`}
-    >
-      <div className="max-w-7xl mx-auto py-4 px-4">
-        <div className="flex items-center justify-between">
-          <Link href="/" className="flex items-center space-x-2">
-            <span className="font-serif text-third text-2xl font-bold">
-              Zero Photography
-            </span>
-          </Link>
+    <>
+      <motion.nav
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          isScrolled
+            ? "bg-[#121212] backdrop-blur-md shadow-elegant"
+            : "bg-transparent"
+        }`}
+      >
+        <div className="max-w-7xl mx-auto py-4 px-4 w-full">
+          <div className="flex items-center justify-between w-full">
+            <Link href="/" className="flex items-center space-x-2">
+              <span className="font-serif text-third text-2xl font-bold">
+                Zero Photography
+              </span>
+            </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
-            {navLinks.map((link) =>
-              link.onclick ? (
-                <button
-                  key={link.name}
-                  onClick={link.onclick}
-                  className={`text-lg font-serif font-medium transition-colors hover:text-third ${
-                    pathname === link.path ? "text-third" : "text-secondary"
-                  }`}
-                >
-                  {link.name}
-                </button>
-              ) : (
-                <Link
-                  key={link.path}
-                  href={link.path}
-                  className={`text-lg font-serif font-medium transition-colors hover:text-third ${
-                    pathname === link.path ? "text-third" : "text-secondary"
-                  }`}
-                >
-                  {link.name}
-                </Link>
-              )
-            )}
-            <Button
-              variant="default"
-              size="default"
-              className="bg-third hover:shadow-glow transition-all font-serif font-semibold text-secondary cursor-pointer hover:bg-third/80"
-              onClick={() => {
-                router.push("/book-now");
-              }}
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center space-x-8">
+              {navLinks.map((link) =>
+                link.onclick ? (
+                  <button
+                    key={link.name}
+                    onClick={link.onclick}
+                    className={`text-lg font-serif font-medium transition-colors hover:text-third ${
+                      pathname === link.path ? "text-third" : "text-secondary"
+                    }`}
+                  >
+                    {link.name}
+                  </button>
+                ) : (
+                  <Link
+                    key={link.path}
+                    href={link.path}
+                    className={`text-lg font-serif font-medium transition-colors hover:text-third ${
+                      pathname === link.path ? "text-third" : "text-secondary"
+                    }`}
+                  >
+                    {link.name}
+                  </Link>
+                )
+              )}
+              <Button
+                variant="default"
+                size="default"
+                className="bg-third hover:shadow-glow transition-all font-serif font-semibold text-secondary cursor-pointer hover:bg-third/80"
+                onClick={() => {
+                  router.push("/book-now");
+                }}
+              >
+                Book Now
+              </Button>
+            </div>
+
+            {/* Mobile Menu Button */}
+            <button
+              className="md:hidden text-secondary z-60 relative"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
-              Book Now
-            </Button>
+              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
           </div>
-
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden text-secondary z-60"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          >
-            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
         </div>
-      </div>
+      </motion.nav>
 
       {/* Mobile Menu - Full Screen from Left */}
       <AnimatePresence>
@@ -131,68 +154,82 @@ const Navbar = () => {
 
             {/* Mobile Menu Panel */}
             <motion.div
-              initial={{ x: "-100%", opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              exit={{ x: "-100%", opacity: 0 }}
+              initial={{ x: "-100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "-100%" }}
               transition={{ type: "spring", damping: 30, stiffness: 300 }}
-              className="fixed top-0 left-0 bottom-0 w-80 max-w-full bg-background/95 backdrop-blur-md shadow-xl z-50 md:hidden"
+              className="fixed top-0 left-0 bottom-0 w-[280px] bg-[#121212] backdrop-blur-md shadow-xl z-50 md:hidden overflow-hidden"
+              style={{ maxWidth: 'calc(100vw - 50px)' }}
             >
-              <div className="flex flex-col h-full">
+              <div className="flex flex-col h-full w-full">
                 {/* Header */}
-                <div className="flex items-center justify-between p-6 border-border">
+                <div className="flex items-center justify-between p-6 border-b border-[#1e1e1e] w-full">
                   <Link
                     href="/"
                     className="flex items-center space-x-2"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
-                    <span className="font-serif text-2xl font-bold bg-gradient-gold bg-clip-text text-third">
+                    <span className="font-serif text-xl font-bold text-third">
                       Zero Photography
                     </span>
                   </Link>
                   <button
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="p-2 text-third hover:bg-accent rounded-lg transition-colors"
+                    className="p-2 text-third hover:bg-[#1e1e1e] rounded-lg transition-colors"
                   >
                     <X size={20} />
                   </button>
                 </div>
 
                 {/* Navigation Links */}
-                <div className="flex-1 p-6">
-                  <div className="flex flex-col space-y-6">
+                <div className="flex-1 p-6 w-full overflow-y-auto">
+                  <div className="flex flex-col space-y-6 w-full">
                     {navLinks.map((link, index) => (
                       <motion.div
-                        key={link.path}
+                        key={link.path || link.name}
                         initial={{ x: -20, opacity: 0 }}
                         animate={{ x: 0, opacity: 1 }}
                         transition={{ delay: index * 0.1 }}
+                        className="w-full"
                       >
-                        <Link
-                          href={link.path}
-                          onClick={() => setIsMobileMenuOpen(false)}
-                          className={`block text-lg 
-                           font-serif
-                           text-secondary font-medium transition-all duration-200 hover:text-third hover:translate-x-2 ${
-                             pathname === link.path
-                               ? "text-third border-l-4 border-third pl-4"
-                               : "text-foreground pl-6"
-                           }`}
-                        >
-                          {link.name}
-                        </Link>
+                        {link.onclick ? (
+                          <button
+                            onClick={() => handleLinkClick(link)}
+                            className={`block text-lg font-serif text-secondary font-medium transition-all duration-200 hover:text-third hover:translate-x-2 w-full text-left ${
+                              pathname === link.path
+                                ? "text-third border-l-4 border-third pl-4"
+                                : "pl-4"
+                            }`}
+                          >
+                            {link.name}
+                          </button>
+                        ) : (
+                          <Link
+                            href={link.path}
+                            onClick={() => handleLinkClick(link)}
+                            className={`block text-lg font-serif text-secondary font-medium transition-all duration-200 hover:text-third hover:translate-x-2 w-full ${
+                              pathname === link.path
+                                ? "text-third border-l-4 border-third pl-4"
+                                : "pl-4"
+                            }`}
+                          >
+                            {link.name}
+                          </Link>
+                        )}
                       </motion.div>
                     ))}
                   </div>
                 </div>
 
                 {/* Footer with CTA */}
-                <div className="p-6 border-t border-border">
+                <div className="p-6 border-t border-[#1e1e1e] w-full">
                   <Button
                     variant="default"
-                    className="bg-third w-full font-serif text-white hover:shadow-glow transition-all"
+                    className="bg-third w-full font-serif text-[#0f0f0f] hover:shadow-glow transition-all"
                     size="lg"
                     onClick={() => {
                       router.push("/book-now");
+                      setIsMobileMenuOpen(false);
                     }}
                   >
                     Book Now
@@ -203,7 +240,7 @@ const Navbar = () => {
           </>
         )}
       </AnimatePresence>
-    </motion.nav>
+    </>
   );
 };
 

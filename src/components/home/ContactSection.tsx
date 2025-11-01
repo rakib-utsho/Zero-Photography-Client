@@ -49,17 +49,17 @@ const ContactSection = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-primary" id="contact-section">
+    <div className="min-h-screen bg-primary w-full overflow-hidden" id="contact-section">
       {/* Hero Section */}
-      <section className="pt-32 pb-16 bg-gradient-dark">
-        <div className="max-w-7xl mx-auto px-4">
+      <section className="pt-32 pb-16 bg-gradient-dark w-full">
+        <div className="max-w-7xl mx-auto px-4 w-full">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-center"
+            className="text-center w-full"
           >
-            <h1 className="font-serif text-secondary text-5xl md:text-6xl font-bold mb-6">
+            <h1 className="font-serif text-secondary text-4xl md:text-6xl font-bold mb-6">
               Contact With{" "}
               <span className="bg-third bg-clip-text text-transparent">Us</span>
             </h1>
@@ -72,15 +72,15 @@ const ContactSection = () => {
       </section>
 
       {/* Contact Section */}
-      <section ref={ref} className="py-10 bg-background">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto">
+      <section ref={ref} className="py-10 bg-background w-full">
+        <div className="container mx-auto px-4 w-full">
+          <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto w-full">
             {/* Contact Info */}
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               animate={isInView ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="space-y-6"
+              className="space-y-6 w-full"
             >
               {contactInfo.map((info, index) => (
                 <motion.a
@@ -89,16 +89,16 @@ const ContactSection = () => {
                   initial={{ opacity: 0, x: -20 }}
                   animate={isInView ? { opacity: 1, x: 0 } : {}}
                   transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
-                  className="flex items-start space-x-4 p-4 rounded-lg bg-badgeColor border border-secondary/20 hover:border-third transition-colors group"
+                  className="flex items-start space-x-4 p-4 rounded-lg bg-badgeColor border border-secondary/20 hover:border-third transition-colors group w-full"
                 >
                   <div className="w-12 h-12 rounded-full bg-third/20 flex items-center justify-center shrink-0 group-hover:bg-third/40 transition-colors">
                     <info.icon className="w-6 h-6 text-third" />
                   </div>
-                  <div className="font-mono">
-                    <h3 className="font-semibold text-secondary text-foreground mb-1">
+                  <div className="font-mono flex-1 min-w-0">
+                    <h3 className="font-semibold text-secondary text-foreground mb-1 truncate">
                       {info.label}
                     </h3>
-                    <p className="text-secondary/60 text-muted-foreground">
+                    <p className="text-secondary/60 text-muted-foreground break-words">
                       {info.value}
                     </p>
                   </div>
@@ -109,12 +109,13 @@ const ContactSection = () => {
                 initial={{ opacity: 0, x: -20 }}
                 animate={isInView ? { opacity: 1, x: 0 } : {}}
                 transition={{ duration: 0.5, delay: 0.6 }}
-                className="pt-6"
+                className="pt-6 w-full"
               >
                 <a
                   href="https://wa.me/8801570220316"
                   target="_blank"
                   rel="noopener noreferrer"
+                  className="block w-full"
                 >
                   <Button className="w-full bg-third hover:shadow-glow hover:bg-third cursor-pointer text-secondary font-bold font-mono">
                     <Phone className="mr-2" size={20} />
@@ -130,9 +131,9 @@ const ContactSection = () => {
               animate={isInView ? { opacity: 1, x: 0 } : {}}
               transition={{ duration: 0.8, delay: 0.2 }}
               onSubmit={handleSubmit}
-              className="space-y-6 font-mono"
+              className="space-y-6 font-mono w-full"
             >
-              <div>
+              <div className="w-full">
                 <Input
                   placeholder="Your Name"
                   value={formData.name}
@@ -140,10 +141,10 @@ const ContactSection = () => {
                     setFormData({ ...formData, name: e.target.value })
                   }
                   required
-                  className="bg-badgeColor border-secondary/60 hover:border-third"
+                  className="w-full bg-badgeColor border-secondary/60 hover:border-third"
                 />
               </div>
-              <div>
+              <div className="w-full">
                 <Input
                   type="email"
                   placeholder="Your Email"
@@ -152,10 +153,10 @@ const ContactSection = () => {
                     setFormData({ ...formData, email: e.target.value })
                   }
                   required
-                  className="bg-badgeColor border-secondary/60 hover:border-third"
+                  className="w-full bg-badgeColor border-secondary/60 hover:border-third"
                 />
               </div>
-              <div>
+              <div className="w-full">
                 <Input
                   type="tel"
                   placeholder="Your Phone"
@@ -164,10 +165,10 @@ const ContactSection = () => {
                     setFormData({ ...formData, phone: e.target.value })
                   }
                   required
-                  className="bg-badgeColor border-secondary/60 hover:border-third"
+                  className="w-full bg-badgeColor border-secondary/60 hover:border-third"
                 />
               </div>
-              <div>
+              <div className="w-full">
                 <Textarea
                   placeholder="Your Message"
                   value={formData.message}
@@ -176,7 +177,7 @@ const ContactSection = () => {
                   }
                   required
                   rows={5}
-                  className="bg-badgeColor border-secondary/60 hover:border-third resize-none"
+                  className="w-full bg-badgeColor border-secondary/60 hover:border-third resize-none"
                 />
               </div>
               <Button
