@@ -1,10 +1,12 @@
-import HeroSection from "@/components/home/HeroSection";
+import AboutSection from "@/components/Home/AboutSection";
+import HeroSection from "@/components/Home/HeroSection";
 import React from "react";
 
 const HomePage = () => {
   return (
     <div>
-      <HeroSection/>
+      <HeroSection />
+      <AboutSection />
     </div>
   );
 };
