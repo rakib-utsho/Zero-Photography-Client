@@ -3,7 +3,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
@@ -12,6 +12,7 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -68,6 +69,9 @@ const Navbar = () => {
               variant="default"
               size="default"
               className="bg-third hover:shadow-glow transition-all font-serif font-semibold text-secondary cursor-pointer hover:bg-third/80"
+              onClick={() => {
+                router.push("/book-now");
+              }}
             >
               Book Now
             </Button>
@@ -158,6 +162,9 @@ const Navbar = () => {
                     variant="default"
                     className="bg-third w-full font-serif text-white hover:shadow-glow transition-all"
                     size="lg"
+                    onClick={() => {
+                      router.push("/book-now");
+                    }}
                   >
                     Book Now
                   </Button>
