@@ -1,11 +1,12 @@
-import AboutSection from "@/components/Home/AboutSection";
-import ContactSection from "@/components/Home/ContactSection";
-import GallerySection from "@/components/Home/GallerySection";
-import HeroSection from "@/components/Home/HeroSection";
-import PricingSection from "@/components/Home/PriceSection";
-import ServicesSection from "@/components/Home/ServiceSection";
-import TestimonialSection from "@/components/Home/Testimonial";
+import AboutSection from "@/components/home/AboutSection";
+import ContactSection from "@/components/home/ContactSection";
+import GallerySection from "@/components/home/GallerySection";
+import HeroSection from "@/components/home/HeroSection";
+import PricingSection from "@/components/home/PriceSection";
+import ServicesSection from "@/components/home/ServiceSection";
+import TestimonialSection from "@/components/home/Testimonial";
 import React from "react";
+
 
 const HomePage = () => {
   return (
